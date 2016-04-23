@@ -1,7 +1,10 @@
+import pickle
 import numpy as np
 import re
 import itertools
 from collections import Counter
+
+# Utilities to load the data and the vocabulary and preprocess the data
 
 
 def clean_str(string):
@@ -67,12 +70,10 @@ def build_vocab(sentences):
     Returns vocabulary mapping and inverse vocabulary mapping.
     """
     # Build vocabulary
-    word_counts = Counter(itertools.chain(*sentences))
-    # Mapping from index to word
-    vocabulary_inv = [x[0] for x in word_counts.most_common()]
-    vocabulary_inv = list(sorted(vocabulary_inv))
-    # Mapping from word to index
-    vocabulary = {x: i for i, x in enumerate(vocabulary_inv)}
+    with open("vocabulary.pkl", "r") as f:
+        vocabulary = pickle.load(f)
+    with open("vocabulary_inv.pkl", "r") as f:
+        vocabulary_inv = pickle.load(f)
     return [vocabulary, vocabulary_inv]
 
 
